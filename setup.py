@@ -3,10 +3,17 @@ from setuptools import setup, find_packages
 import sys
 
 here = os.path.abspath(os.path.dirname(__file__))
+readme = open(os.path.join(here, 'README.rst')).read()
+changes = open(os.path.join(here, 'README.rst')).read()
 
 requires = ['Django']
 if sys.version_info < (2, 7):
     requires += ['ordereddict']
+elif (3, 0) > sys.version_info >= (2, 7):
+    long_description = unicode(readme + '\n\n' + changes, 'utf-8')
+elif sys.version_info > (3, 0):
+    long_description = bytes(readme + '\n\n' + changes, 'utf-8')
+
 
 setup(
     name='django-leaflet',
@@ -16,8 +23,7 @@ setup(
     url='https://github.com/makinacorpus/django-leaflet',
     download_url = "http://pypi.python.org/pypi/django-leaflet/",
     description="Use Leaflet in your django projects",
-    long_description=unicode(open(os.path.join(here, 'README.rst')).read() + '\n\n' +
-                     open(os.path.join(here, 'CHANGES')).read()),
+    long_description=long_description,
     license='LPGL, see LICENSE file.',
     install_requires=requires,
     packages=find_packages(),
