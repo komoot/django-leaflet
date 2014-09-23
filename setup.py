@@ -10,9 +10,8 @@ requires = ['Django']
 if sys.version_info < (2, 7):
     requires += ['ordereddict']
 elif (3, 0) > sys.version_info >= (2, 7):
-    long_description = unicode(readme + '\n\n' + changes, 'utf-8')
-elif sys.version_info > (3, 0):
-    long_description = bytes(readme + '\n\n' + changes, 'utf-8')
+    readme = str(readme.encode('utf-8'))
+    changes = str(changes.encode('utf-8'))
 
 
 setup(
@@ -23,7 +22,7 @@ setup(
     url='https://github.com/makinacorpus/django-leaflet',
     download_url = "http://pypi.python.org/pypi/django-leaflet/",
     description="Use Leaflet in your django projects",
-    long_description=long_description,
+    long_description=readme + '\n\n' + changes,
     license='LPGL, see LICENSE file.',
     install_requires=requires,
     packages=find_packages(),
